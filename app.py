@@ -269,14 +269,14 @@ summary { color: #4fc3f7 !important; font-family: 'IBM Plex Mono', monospace !im
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 CLIENTS = {
-    "Telstra": {
-        "country": "🇦🇺 Australia",
-        "dot_color": "#4fc3f7",
-        "feeds": [
-            "https://news.google.com/rss/search?q=Telstra+telecom&hl=en-AU&gl=AU&ceid=AU:en",
-            "https://news.google.com/rss/search?q=Telstra+network+5G&hl=en&gl=AU&ceid=AU:en",
-        ],
-        "keywords": ["Telstra", "NBN", "5G Australia", "telco Australia"],
+   "Telstra": {
+    "country": "🇦🇺 Australia",
+    "dot_color": "#4fc3f7",
+    "feeds": [
+        "https://news.google.com/rss/search?q=Telstra+site:telstra.com.au&hl=en-AU&gl=AU&ceid=AU:en",
+        "https://news.google.com/rss/search?q=Telstra+media+release+site:telstra.com.au&hl=en-AU&gl=AU&ceid=AU:en",
+    ],
+       
     },
     "StarHub": {
         "country": "🇸🇬 Singapore",
