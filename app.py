@@ -474,7 +474,7 @@ with col_info:
         </div>
         """, unsafe_allow_html=True)
 
-        st.markdown("""<div style='font-family: IBM Plex Mono, monospace; font-size: 12px; 
+     st.markdown("""<div style='font-family: IBM Plex Mono, monospace; font-size: 12px; 
                     color: #f0a500; padding: 10px; background: #1a1000; 
                     border: 1px solid #3a2800; border-radius: 6px; margin-top: 4px;'>
             ⚠ Enter your Groq API key in the sidebar to run the agent
