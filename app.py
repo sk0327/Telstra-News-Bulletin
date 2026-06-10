@@ -319,7 +319,7 @@ def groq_summarize(client_name: str, articles: list[dict], api_key: str, model: 
     if not articles:
         return "No articles found for this client this week."
 
-    client = Groq(api_key="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")
+    client = Groq(api_key=api_key)
     articles_text = "\n\n".join([
         f"[{i+1}] {a['title']}\nSource: {a['source']} | {a['published']}\n{a['summary']}"
         for i, a in enumerate(articles)
@@ -360,7 +360,7 @@ NEWS ARTICLES:
 
 def groq_combined_digest(telstra_summary: str, starhub_summary: str, api_key: str, model: str) -> str:
     """Generate a combined executive digest."""
-    client = Groq(api_key="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")
+    client = Groq(api_key=api_key)
     prompt = f"""You are a senior account manager preparing a Monday morning team briefing.
 
 Based on these two client intel summaries, write a 3–4 sentence combined executive digest 
@@ -395,6 +395,13 @@ with st.sidebar:
         ⚙ Configuration
     </div>
     """, unsafe_allow_html=True)
+
+    groq_api_key = st.text_input(
+        "Groq API Key",
+        type="password",
+        placeholder="gsk_...",
+        help="Get your free API key at console.groq.com"
+    )
 
     st.markdown("<br>", unsafe_allow_html=True)
 
