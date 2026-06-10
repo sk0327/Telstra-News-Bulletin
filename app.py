@@ -4,6 +4,7 @@ import requests
 from datetime import datetime, timedelta
 from groq import Groq
 import time
+import os
 
 # ── Page Config ──────────────────────────────────────────────────────────────
 st.set_page_config(
@@ -12,6 +13,19 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+
+# ── Groq Backend Config ──────────────────────────────────────────────────────
+try:
+    GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
+except Exception:
+    GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+
+if not GROQ_API_KEY:
+    st.error("GROQ_API_KEY not found. Configure it in Streamlit Secrets or environment variables.")
+    st.stop()
+
+groq_client = Groq(api_key=GROQ_API_KEY)
 
 # ── Custom CSS ────────────────────────────────────────────────────────────────
 st.markdown("""
@@ -314,12 +328,11 @@ def fetch_rss_articles(client_name: str, max_items: int = 10) -> list[dict]:
     return articles[:max_items]
 
 
-def groq_summarize(client_name: str, articles: list[dict], api_key: str, model: str, tone: str) -> str:
+def groq_summarize(client_name: str, articles: list[dict], model: str, tone: str) -> str:
     """Use Groq to summarise news articles into a client intel brief."""
     if not articles:
         return "No articles found for this client this week."
 
-    client = Groq(api_key=api_key)
     articles_text = "\n\n".join([
         f"[{i+1}] {a['title']}\nSource: {a['source']} | {a['published']}\n{a['summary']}"
         for i, a in enumerate(articles)
@@ -347,7 +360,7 @@ NEWS ARTICLES:
 {articles_text}"""
 
     try:
-        response = client.chat.completions.create(
+        response = groq_client.chat.completions.create(
             model=model,
             messages=[{"role": "user", "content": prompt}],
             max_tokens=400,
@@ -358,9 +371,8 @@ NEWS ARTICLES:
         return f"⚠️ Groq API error: {e}"
 
 
-def groq_combined_digest(telstra_summary: str, starhub_summary: str, api_key: str, model: str) -> str:
+def groq_combined_digest(telstra_summary: str, starhub_summary: str, model: str) -> str:
     """Generate a combined executive digest."""
-    client = Groq(api_key=api_key)
     prompt = f"""You are a senior account manager preparing a Monday morning team briefing.
 
 Based on these two client intel summaries, write a 3–4 sentence combined executive digest 
@@ -375,7 +387,7 @@ STARHUB BRIEF:
 Start directly with the content. No preamble. Be direct and actionable."""
 
     try:
-        response = client.chat.completions.create(
+        response = groq_client.chat.completions.create(
             model=model,
             messages=[{"role": "user", "content": prompt}],
             max_tokens=200,
@@ -395,13 +407,6 @@ with st.sidebar:
         ⚙ Configuration
     </div>
     """, unsafe_allow_html=True)
-
-    groq_api_key = st.text_input(
-        "Groq API Key",
-        type="password",
-        placeholder="gsk_...",
-        help="Get your free API key at console.groq.com"
-    )
 
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -461,7 +466,14 @@ col_btn, col_info = st.columns([1, 3])
 with col_btn:
     run_btn = st.button("⚡ RUN DIGEST", use_container_width=True)
 with col_info:
-    if not groq_api_key:
+    st.markdown("""
+        <div style='font-family: IBM Plex Mono, monospace; font-size: 12px;
+                    color: #2ecc71; padding: 10px; background: #001a0a;
+                    border: 1px solid #004a1a; border-radius: 6px; margin-top: 4px;'>
+            ✓ Backend Groq key loaded
+        </div>
+        """, unsafe_allow_html=True)
+
         st.markdown("""
         <div style='font-family: IBM Plex Mono, monospace; font-size: 12px; 
                     color: #f0a500; padding: 10px; background: #1a1000; 
@@ -483,10 +495,7 @@ st.markdown("<hr>", unsafe_allow_html=True)
 
 # ── Main Logic ────────────────────────────────────────────────────────────────
 if run_btn:
-    if not groq_api_key:
-        st.error("Please enter your Groq API key in the sidebar.")
-        st.stop()
-
+    
     results = {}
     summaries = {}
 
@@ -519,7 +528,7 @@ if run_btn:
             for client in CLIENTS:
                 with st.spinner(f"Summarising {client} with Groq..."):
                     summaries[client] = groq_summarize(
-                        client, results[client], groq_api_key, model_choice, tone_choice
+                        client, results[client], model_choice, tone_choice
                     )
 
         time.sleep(0.3)
@@ -554,7 +563,7 @@ if run_btn:
     if all(k in summaries for k in CLIENTS):
         with st.spinner("Generating combined executive digest..."):
             combined = groq_combined_digest(
-                summaries["Telstra"], summaries["StarHub"], groq_api_key, model_choice
+                summaries["Telstra"], summaries["StarHub"], model_choice
             )
         st.markdown(f"""
         <div style='background: #060f1e; border: 1px solid #1a4a6a; border-radius: 10px; 
