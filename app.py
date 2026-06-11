@@ -184,7 +184,7 @@ summary { color: #4fc3f7 !important; font-family: 'IBM Plex Mono', monospace !im
 
 
 # ── Load API Key from secrets ──────────────────────────────────────────────────
-groq_api_key = st.secrets["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"]
+groq_api_key = st.secrets["GROQ_API_KEY"]
 
 # ── Client Definitions ─────────────────────────────────────────────────────────
 CLIENTS = {
