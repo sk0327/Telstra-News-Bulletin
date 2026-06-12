@@ -21,13 +21,13 @@ st.markdown("""
 html, body, [class*="css"] {
     font-family: 'IBM Plex Sans', sans-serif;
     background-color: #0a0e17;
-    color: #c9d1e0;
+    color: #e2e8f0;
 }
 [data-testid="stSidebar"] {
     background-color: #0d1220;
     border-right: 1px solid #1e2a3a;
 }
-[data-testid="stSidebar"] * { color: #c9d1e0 !important; }
+[data-testid="stSidebar"] * { color: #e2e8f0 !important; }
 .stApp { background-color: #0a0e17; }
 
 .header-strip {
@@ -42,14 +42,14 @@ html, body, [class*="css"] {
 }
 .header-title {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 600;
-    color: #4fc3f7;
+    color: #7dd3fc;
     letter-spacing: 1px;
 }
 .header-sub {
-    font-size: 12px;
-    color: #5a7a9a;
+    font-size: 14px;
+    color: #94a3b8;
     font-family: 'IBM Plex Mono', monospace;
     margin-top: 4px;
 }
@@ -59,8 +59,8 @@ html, body, [class*="css"] {
     border-radius: 4px;
     padding: 6px 12px;
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: #4fc3f7;
+    font-size: 13px;
+    color: #7dd3fc;
 }
 .client-section {
     background: #0d1220;
@@ -79,14 +79,14 @@ html, body, [class*="css"] {
 }
 .client-name {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     letter-spacing: 1px;
     text-transform: uppercase;
 }
 .client-country {
-    font-size: 11px;
-    color: #5a7a9a;
+    font-size: 13px;
+    color: #94a3b8;
     margin-left: auto;
     font-family: 'IBM Plex Mono', monospace;
 }
@@ -97,10 +97,10 @@ html, body, [class*="css"] {
     padding: 12px 16px;
     margin-bottom: 10px;
 }
-.news-item:hover { border-left-color: #4fc3f7; }
-.news-title { font-size: 13px; font-weight: 500; color: #d0dff0; margin-bottom: 4px; }
-.news-meta { font-size: 11px; color: #3d5a7a; font-family: 'IBM Plex Mono', monospace; }
-.news-summary { font-size: 12px; color: #7a9ab8; margin-top: 6px; line-height: 1.5; }
+.news-item:hover { border-left-color: #7dd3fc; }
+.news-title { font-size: 15px; font-weight: 500; color: #f1f5f9; margin-bottom: 4px; }
+.news-meta { font-size: 12px; color: #64748b; font-family: 'IBM Plex Mono', monospace; }
+.news-summary { font-size: 14px; color: #94a3b8; margin-top: 6px; line-height: 1.6; }
 .ai-summary-box {
     background: #061428;
     border: 1px solid #1a4a6a;
@@ -110,13 +110,13 @@ html, body, [class*="css"] {
 }
 .ai-summary-label {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    color: #4fc3f7;
+    font-size: 11px;
+    color: #7dd3fc;
     letter-spacing: 2px;
     margin-bottom: 8px;
     text-transform: uppercase;
 }
-.ai-summary-text { font-size: 13px; color: #a0c0d8; line-height: 1.7; }
+.ai-summary-text { font-size: 15px; color: #cbd5e1; line-height: 1.8; }
 .stButton > button {
     background: #0d2137 !important;
     color: #4fc3f7 !important;
@@ -146,9 +146,9 @@ html, body, [class*="css"] {
 }
 .stTextInput label, .stTextArea label, .stSelectbox label, .stSlider label,
 .stMultiSelect label, .stCheckbox label {
-    color: #5a7a9a !important;
+    color: #94a3b8 !important;
     font-family: 'IBM Plex Mono', monospace !important;
-    font-size: 11px !important;
+    font-size: 12px !important;
     letter-spacing: 1px !important;
     text-transform: uppercase !important;
 }
@@ -166,18 +166,18 @@ hr { border-color: #1e2a3a !important; }
     font-family: 'IBM Plex Mono', monospace;
     font-size: 28px;
     font-weight: 600;
-    color: #4fc3f7;
+    color: #7dd3fc;
 }
 .metric-lbl {
-    font-size: 11px;
-    color: #5a7a9a;
+    font-size: 12px;
+    color: #94a3b8;
     margin-top: 2px;
     font-family: 'IBM Plex Mono', monospace;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 details { background: #0d1220 !important; }
-summary { color: #4fc3f7 !important; font-family: 'IBM Plex Mono', monospace !important; }
+summary { color: #7dd3fc !important; font-family: 'IBM Plex Mono', monospace !important; font-size: 14px !important; }
 #MainMenu, footer { visibility: hidden; }
 </style>
 """, unsafe_allow_html=True)
@@ -636,18 +636,23 @@ else:
             AI-powered intelligence briefs.
         </div>
     </div>
-    <div style='display:flex;gap:16px;max-width:800px;margin:0 auto;flex-wrap:wrap;'>
-    """ + "".join([f"""
-        <div style='flex:1;min-width:180px;background:#0d1220;border:1px solid #1e2a3a;
-                    border-radius:10px;padding:20px;text-align:center;'>
-            <div style='font-size:24px;margin-bottom:8px;'>{icon}</div>
-            <div style='font-family:IBM Plex Mono,monospace;font-size:12px;
-                        color:{color};margin-bottom:6px;'>{label}</div>
-            <div style='font-size:11px;color:#3d5a7a;'>{desc}</div>
-        </div>
-    """ for icon, label, color, desc in [
-        ("🇦🇺", "TELSTRA",  "#4fc3f7", "Australia · Telecom & NBN"),
-        ("🇸🇬", "STARHUB",  "#f06292", "Singapore · 5G & Broadband"),
-        ("🇲🇾", "MEASAT",   "#a78bfa", "Malaysia · Satellite & Broadcast"),
-        ("📅", "DATE FILTER", "#4fc3f7", "Filter by month & year"),
-    ]]) + "</div>", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
+
+    cards = [
+        ("🇦🇺", "TELSTRA",      "#4fc3f7", "Australia · Telecom & NBN"),
+        ("🇸🇬", "STARHUB",      "#f06292", "Singapore · 5G & Broadband"),
+        ("🇲🇾", "MEASAT",       "#a78bfa", "Malaysia · Satellite & Broadcast"),
+        ("📅",  "DATE FILTER",  "#4fc3f7", "Filter by month & year"),
+    ]
+    c1, c2, c3, c4 = st.columns(4)
+    for col, (icon, label, color, desc) in zip([c1, c2, c3, c4], cards):
+        with col:
+            st.markdown(f"""
+            <div style='background:#0d1220;border:1px solid #1e2a3a;border-radius:10px;
+                        padding:20px;text-align:center;'>
+                <div style='font-size:24px;margin-bottom:8px;'>{icon}</div>
+                <div style='font-family:IBM Plex Mono,monospace;font-size:12px;
+                            color:{color};margin-bottom:6px;'>{label}</div>
+                <div style='font-size:11px;color:#3d5a7a;'>{desc}</div>
+            </div>
+            """, unsafe_allow_html=True)
